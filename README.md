@@ -9,6 +9,8 @@ Just run `docker-compose up`.
 ## 📄 API documentation
 You can check the full API documentation in [Swagger UI](https://yahyaee98.github.io/simple-chat-php/api).
 
+I've deployed the code on [chat.cloud.soheil.io](https://chat.cloud.soheil.io) and that is configured in the Swagger UI. Feel free to play with the APIs the Swagger UI! ✨
+
 ## 🧪 Tests
 I've included some tests for the `Chat` service. Just run `make test` to see them working 😁.
 
