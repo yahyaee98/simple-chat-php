@@ -26,7 +26,7 @@ class SendMessageFeature
         $message->from = $from;
         $message->to = $to;
         $message->text = $text;
-        $message->created_at = Carbon::now();
+        $message->created_at = Carbon::now()->format(Carbon::DEFAULT_TO_STRING_FORMAT);
 
         return $this->messageRepository
             ->persistMessage($message);
