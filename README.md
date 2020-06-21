@@ -7,7 +7,7 @@ a Simple chat backend written in PHP.
 Just run `docker-compose up`.
 
 ## 📄 API documentation
-You can check the full API documentation in [somelink](https://google.com).
+You can check the full API documentation in [Swagger UI](https://yahyaee98.github.io/simple-chat-php/api).
 
 ## 🧪 Tests
 I've included some tests for the `Chat` service. Just run `make test` to see them working 😁.
