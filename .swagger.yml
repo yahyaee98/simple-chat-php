@@ -1,0 +1,207 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Chat application API documentation"
+host: "chat.cloud.soheil.io"
+basePath: "/v1"
+schemes:
+  - "https"
+paths:
+  /users:
+    post:
+      summary: "Create a new user"
+      description: "This route will help you create a new user with a simple nickname. It will also give you a token, so that can be used to make further requests."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: CreateUserRequest
+          description: The user to create. Nickname is unique and should not be taken before.
+          schema:
+            $ref: '#/definitions/CreateUserRequest'
+      responses:
+        "200":
+          description: "User created"
+          schema:
+            $ref: "#/definitions/CreateUserResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Something bad has happened on the server"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /messages:
+    post:
+      summary: "Send a message"
+      description: "a Message can be sent to another user's inbox with this route."
+      security:
+        - HeaderJWTToken: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: body
+          name: SendMessageReqeust
+          description: The message to send.
+          schema:
+            $ref: '#/definitions/SendMessageRequest'
+      responses:
+        "200":
+          description: "Message sent"
+          schema:
+            $ref: "#/definitions/MessageSentResponse"
+        "400":
+          description: "Validation error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Something bad has happened on the server"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /inbox:
+    get:
+      summary: "Get own inbox"
+      description: "Authenticated user's inbox will be retuned. An inbox contains all the messages that the user has received ever."
+      security:
+        - HeaderJWTToken: []
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Successful response"
+          schema:
+            $ref: "#/definitions/InboxResponse"
+        "401":
+          description: "User is unauthorized. Token is not provided or it's not valid."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Something bad has happened on the server"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+securityDefinitions:
+  HeaderJWTToken:
+    description: "It's value should contain \"Bearer \" at first and the JWT token after that. You can obtain a token by making a POST request to /users. an Example value: Bearer somejwttoken"
+    type: apiKey
+    in: header
+    name: Authorization
+
+definitions:
+  DateTime:
+    type: "string"
+    description: "a date time in the default format: YYYY-mm-dd H:i:s"
+    example: "2020-06-21 13:14:33"
+
+  UUID:
+    type: "string"
+    description: "a Unique identifier"
+    example: "d9550cb5-bebd-4e57-9f9c-845a6864bde6"
+
+  JWTToken:
+    type: "string"
+    description: "a JWT Token used for authentication"
+    example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiYWNrZW5kIiwic3ViIjoiOWVmMjAyMDgtNWFmMC00NWQwLTlkOTEtYTQzMTA0YjEzZDYxIiwiaWF0IjoxNTkyNzMzMjU4LCJleHAiOjE1OTI3MzY4NTh9.QIx2u9RbKTP2ZT23kr46i4LQQMNuAD_tTKaUkyGvbrg"
+
+  User:
+    type: "object"
+    properties:
+      id:
+        $ref: '#/definitions/UUID'
+      nickname:
+        type: "string"
+        example: "someCoolNickname12"
+
+  CreateUserResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          user:
+            $ref: '#/definitions/User'
+          token:
+            $ref: '#/definitions/JWTToken'
+
+  CreateUserRequest:
+    type: "object"
+    properties:
+      nickname:
+        type: "string"
+        example: "someCoolNickname12"
+
+  Message:
+    type: "object"
+    properties:
+      id:
+        $ref: '#/definitions/UUID'
+      text:
+        type: "string"
+        example: "some message"
+      created_at:
+        $ref: '#/definitions/DateTime'
+      author:
+        $ref: '#/definitions/User'
+
+  SentMessage:
+    type: "object"
+    properties:
+      id:
+        $ref: '#/definitions/UUID'
+      text:
+        type: "string"
+        example: "some message"
+      created_at:
+        $ref: '#/definitions/DateTime'
+
+  Inbox:
+    type: "object"
+    properties:
+      messages:
+        type: "array"
+        items:
+          $ref: '#/definitions/Message'
+
+  InboxResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          inbox:
+            $ref: '#/definitions/Inbox'
+
+  MessageSentResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          message:
+            $ref: '#/definitions/SentMessage'
+
+  SendMessageRequest:
+    type: "object"
+    properties:
+      to:
+        $ref: '#/definitions/UUID'
+      text:
+        type: "string"
+        example: "Hello!"
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "object"
+        properties:
+          message:
+            type: "string"
+            example: "some meaningful message"

@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  chat:
+    build: ./
+    environment:
+      - APP_ENV=production
+      - APP_TIMEZONE=Europe/Amsterdam
+      - APP_KEY=base64:0eE12dNA+mepk/HVvzi0nwOrRn/tMw1z88lfYJOgcX8=
+      - JWT_SECRET=SOME_RANDOM_KEY
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/app/database/sqlite/database.sqlite
+    volumes:
+      - sqlite:/app/database/sqlite
+    ports:
+      - 8080:8080
+
+volumes:
+  sqlite:

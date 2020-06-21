@@ -1,0 +1,5 @@
+.git
+.env
+storage/logs/
+database/sqlite/*.sqlite
+.phpunit.result.cache
