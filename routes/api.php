@@ -22,8 +22,13 @@ $router->group([
     'middleware' => 'auth',
     'prefix' => 'v1',
 ], static function () use ($router): void {
-    $router->get('/inbox', 'ChatController@getInbox');
-    $router->post('/messages', 'ChatController@postMessage');
+    $router->group([
+        'middleware' => 'auth',
+    ], static function () use ($router): void {
+        $router->get('/inbox', 'ChatController@getInbox');
+        $router->post('/messages', 'ChatController@postMessage');
+    });
+
+    $router->post('/users', 'UserController@register');
 });
 
-$router->post('/users', 'UserController@register');
