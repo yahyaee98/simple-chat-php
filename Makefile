@@ -6,7 +6,10 @@ CI_COMMIT_SHORT_SHA?=$(shell cat .git/$(GIT_HEAD_REF) | head -c 7)
 up:
 	GIT_SHA=$(CI_COMMIT_SHORT_SHA) docker-compose up --build
 
-test:
+install:
+	composer install
+
+test: install
 	php vendor/bin/phpunit
 
 docker:
