@@ -19,7 +19,6 @@ $router->get('/', function () use ($router) {
 
 
 $router->group([
-    'middleware' => 'auth',
     'prefix' => 'v1',
 ], static function () use ($router): void {
     $router->group([
