@@ -60,6 +60,10 @@ paths:
           description: "Validation error"
           schema:
             $ref: "#/definitions/ErrorResponse"
+        "401":
+          description: "User is unauthorized. Token is not provided or it's not valid."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
         "500":
           description: "Something bad has happened on the server"
           schema:
