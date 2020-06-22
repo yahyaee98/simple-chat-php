@@ -13,8 +13,14 @@
 |
 */
 
+$router->get('/', function () use ($router) {
+    return sprintf('%s (#%s)', config('app.name'), config('app.version'));
+});
+
+
 $router->group([
     'middleware' => 'auth',
+    'prefix' => 'v1',
 ], static function () use ($router): void {
     $router->get('/inbox', 'ChatController@getInbox');
     $router->post('/messages', 'ChatController@postMessage');

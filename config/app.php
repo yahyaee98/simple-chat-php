@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Lumen'),
+    'name' => env('APP_NAME', 'Simple chat'),
 
     /*
     |--------------------------------------------------------------------------
@@ -107,5 +107,7 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
+
+    'version' => env('APP_GIT_SHA', ''),
 
 ];
