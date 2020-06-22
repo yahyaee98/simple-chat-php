@@ -28,6 +28,9 @@ RUN composer --working-dir=. install
 RUN composer install --optimize-autoloader --no-dev
 RUN touch database/sqlite/database.sqlite && php artisan migrate --force
 
+ARG GIT_SHA
+ENV APP_GIT_SHA $GIT_SHA
+
 EXPOSE 8080
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
