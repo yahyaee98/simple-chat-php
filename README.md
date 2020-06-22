@@ -4,7 +4,7 @@
 a Simple chat backend written in PHP.
 
 ## 🚀 Quickstart
-Just run `docker-compose up`.
+Just run `make up`.
 
 ## 📄 API documentation
 You can check the full API documentation in [Swagger UI](https://yahyaee98.github.io/simple-chat-php/api).
