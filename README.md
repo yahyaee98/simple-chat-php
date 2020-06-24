@@ -1,5 +1,6 @@
 # Simple chat
 [![Build Status](https://travis-ci.org/yahyaee98/simple-chat-php.svg?branch=master)](https://travis-ci.org/yahyaee98/simple-chat-php)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/yahyaee98/simple-chat-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/yahyaee98/simple-chat-php/?branch=master)
 
 a Simple chat backend written in PHP.
 
